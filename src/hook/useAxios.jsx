@@ -17,7 +17,12 @@ function useAxios(path, method, ) {
         return res.data;
       };
 
-      return { data, postData };
+    const deleteData = async (id) => {
+        await axios.delete(`http://localhost:3000${path}/${id}`);
+        setData(prevData => prevData.filter(item => item.id!== id));
+      };
+
+      return { data, postData, deleteData };
     }
 
 export default useAxios
