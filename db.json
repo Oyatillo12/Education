@@ -1,0 +1,55 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "name": "Oyatillo",
+      "surname": "Abdishukurov",
+      "email": "oatiloabduskurov@gmail.com",
+      "study": "INTER NATION"
+    },
+    {
+      "id": "2",
+      "name": "Doniyor",
+      "surname": "Mahkamov",
+      "email": "doniyor@gmail.com",
+      "study": "NAJOT TA'LIM"
+    },
+    {
+      "id": "9b95",
+      "name": "asadillo",
+      "surname": "mahkamov",
+      "email": "nskcan@gmail.com",
+      "study": "dcsdcss"
+    },
+    {
+      "id": "2892",
+      "name": "hello",
+      "surname": "how are ",
+      "email": "nvdjs@gmail.com",
+      "study": "caca"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "1",
+      "name": "Otabek",
+      "surname": "Mahkamov",
+      "email": "doniyor@gmail.com",
+      "job": "Dentist"
+    },
+    {
+      "id": "9bcd",
+      "name": "hello",
+      "surname": "dvsds",
+      "email": "dbjs@gmail.com",
+      "job": "what "
+    },
+    {
+      "id": "28ef",
+      "name": "hello",
+      "surname": "dvsds",
+      "email": "dbjs@gmail.com",
+      "job": "what "
+    }
+  ]
+}
