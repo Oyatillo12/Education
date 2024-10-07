@@ -1,4 +1,12 @@
 {
   "students": [],
-  "teachers": []
+  "teachers": [
+    {
+      "id": "de2a",
+      "name": "Oyatillo",
+      "surname": "Abdishukurov",
+      "email": "oyatillo@gmail.com",
+      "job": "frontend mentor"
+    }
+  ]
 }
