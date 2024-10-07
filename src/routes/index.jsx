@@ -7,7 +7,7 @@ function SchoolRoutes() {
     <div>
       <Routes>
         <Route path='/' element={<School/>}/>
-        <Route path='/id:' element={<SinglePage/>}/>
+        <Route path='person/:id' element={<SinglePage/>}/>
       </Routes>
     </div>
   )

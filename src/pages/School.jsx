@@ -1,14 +1,18 @@
 import { MoonFilled, SunOutlined } from '@ant-design/icons'
 import { Button, Input, } from 'antd'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Modal from '../components/Modal'
 import useAxios from '../hook/useAxios'
 import InformationCard from '../components/InformationCard'
 import TextArea from 'antd/es/input/TextArea'
 import LoadingImg from '../assets/images/loading.png'
 import toast, { Toaster } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import { Context } from '../context/Context'
 
 function School() {
+    const navigate = useNavigate()
+    const { setSinglePerson} = useContext(Context)
     const [editModal, setEditModal] = useState(false)
     const [person, setPerson] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -32,11 +36,23 @@ function School() {
         setOpenModal(true)
         setPersonSelected('1')
         setShowAddPerson(false)
+        setPerson(null)
+        setName(null)
+        setSurname(null)
+        setEmail(null)
+        setActivity(null)
+        setBio(null)
     }
     function handleTeacherAdd() {
         setOpenModal(true)
         setPersonSelected('2')
         setShowAddPerson(false)
+        setPerson(null)
+        setName(null)
+        setSurname(null)
+        setEmail(null)
+        setActivity(null)
+        setBio(null)
     }
     function hadnleEdit(id) {
         setEditModal(true)
@@ -133,7 +149,16 @@ function School() {
         setBio(null)
     }
 
-
+    function handleMore(data){
+        setIsLoading(true)
+        setEditModal(true)
+        setTimeout(() => {
+            setSinglePerson(data)
+            setIsLoading(false)
+            setEditModal(false)
+            navigate(`person/${data.id}`)
+        },1000)
+    }
 
 
 
@@ -196,8 +221,8 @@ function School() {
                         <span className='text-lg dark:text-white'>No data available</span>
                     </li>}
 
-                    {showData == '1' ? students.map(item => <InformationCard editClick={hadnleEdit} onClick={handleDelete} key={item.id} item={item} />)
-                        : teachers.map(item => <InformationCard editClick={hadnleEdit} onClick={handleDelete} key={item.id} item={item} />)}
+                    {showData == '1' ? students.map(item => <InformationCard morePage={handleMore} editClick={hadnleEdit} onClick={handleDelete} key={item.id} item={item} />)
+                        : teachers.map(item => <InformationCard morePage={handleMore} editClick={hadnleEdit} onClick={handleDelete} key={item.id} item={item} />)}
 
                 </ul>
             </div>
@@ -247,6 +272,7 @@ function School() {
                         </div>
                     </form>}
             </Modal>
+
 
         </>
 

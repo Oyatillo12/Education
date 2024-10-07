@@ -1,53 +1,21 @@
 {
   "students": [
     {
-      "name": "hellodv sd",
-      "surname": "b",
-      "email": "nkvds@mman.com",
-      "bio": "",
-      "study": "hello",
-      "id": "8634"
+      "name": "hello",
+      "surname": "njdnv",
+      "email": "dinvj@gmail.com",
+      "bio": "dvsdnckdb/kddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\n",
+      "study": "maktab",
+      "id": "3795"
     },
     {
-      "id": "68eb",
-      "name": "bobur",
-      "surname": "mahkamov",
-      "email": "bobur@gmail.com",
-      "study": "teacher"
-    },
-    {
-      "id": "9140",
-      "name": "Asadullo",
-      "surname": "Vasiev",
-      "email": "asadullo@gmail.com",
-      "bio": "I'm 10 . I study at 184-maktab, in my future I would be a businessman and help people in need",
-      "study": "184-maktab"
-    },
-    {
-      "name": "asda",
-      "surname": "how are oyu ",
-      "email": "sjbcbj@gmail.com",
-      "bio": "",
-      "study": "hello",
-      "id": "3c8e"
+      "id": "fb44",
+      "name": "javohir",
+      "surname": "hello",
+      "email": "how@gmail.com",
+      "bio": "mabddddddddddddddddddsjbjds",
+      "study": "not"
     }
   ],
-  "teachers": [
-    {
-      "name": "jahongir",
-      "surname": "faziljanov",
-      "email": "jahongir@gmail.com",
-      "bio": "not",
-      "job": "timur",
-      "id": "86f3"
-    },
-    {
-      "id": "80dc",
-      "name": "what are you di",
-      "surname": "en vjd",
-      "email": "sasc@gmail.com",
-      "bio": "ddscs",
-      "job": "scsaca"
-    }
-  ]
+  "teachers": []
 }
