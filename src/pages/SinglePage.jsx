@@ -29,9 +29,9 @@ function SinglePage() {
             <span className='text-lg font-bold'>Email:</span>
             <strong className='text-xl italic font-normal dark:opacity-70'>{singlePerson.email}</strong>
           </div>
-          <div className='py-1 flex items-center space-x-5 break-words '>
+          <div className='py-1 flex items-center  space-x-5'>
             <span className='text-lg font-bold'>Bio:</span>
-            <p className='text-xl italic line-clamp-2 w-[17%] dark:opacity-70'>{singlePerson.bio}</p>
+            <p className='text-xl italic  w-[43%] whitespace-normal overflow-ellipsis overflow-hidden dark:opacity-70'>{singlePerson.bio}</p>
           </div>
           <div className='py-1 flex items-center space-x-5'>
             <span className='text-lg font-bold'>{singlePerson.job ? 'Job:' : 'Study or Hobby:'}</span>

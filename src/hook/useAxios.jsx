@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function useAxios(path) {
     const [data, setData] = useState([])
@@ -26,7 +26,6 @@ function useAxios(path) {
         await axios.delete(`http://localhost:3000${path}/${id}`);
         setData(prevData => prevData.filter(item => item.id!== id));
       };
-
       return { data, postData, deleteData, EditData };
     }
 
