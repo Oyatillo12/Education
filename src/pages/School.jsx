@@ -9,6 +9,8 @@ import LoadingImg from '../assets/images/loading.png'
 import toast, { Toaster } from 'react-hot-toast'
 
 function School() {
+    const [editModal, setEditModal] = useState(false)
+    const [person, setPerson] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [personSelected, setPersonSelected] = useState(null)
     const [openModal, setOpenModal] = useState(false)
@@ -16,8 +18,8 @@ function School() {
     const [deleteModal, setDeleteModal] = useState(false)
     const [showData, setShowData] = useState('1')
     const [showAddPerson, setShowAddPerson] = useState(false)
-    const { data: students, postData: addStudent, deleteData: deleteStudent } = useAxios('/students');
-    const { data: teachers, postData: addTeacher, deleteData: deleteTeacher } = useAxios('/teachers');
+    const { data: students, postData: addStudent, deleteData: deleteStudent, EditData: EditStudent } = useAxios('/students');
+    const { data: teachers, postData: addTeacher, deleteData: deleteTeacher, EditData: EditTeacher } = useAxios('/teachers');
 
     const [name, setName] = useState(null)
     const [surname, setSurname] = useState(null)
@@ -36,47 +38,104 @@ function School() {
         setPersonSelected('2')
         setShowAddPerson(false)
     }
+    function hadnleEdit(id) {
+        setEditModal(true)
+        if (showData === '1') {
+            const findedStudent = students.find(item => item.id == id)
+
+            setPerson(findedStudent)
+            setName(findedStudent?.name)
+            setSurname(findedStudent?.surname)
+            setEmail(findedStudent?.email)
+            setActivity(findedStudent?.study ? findedStudent?.study : findedStudent?.job)
+            setBio(findedStudent?.bio)
+        }
+        else {
+            const findedTeacher = teachers.find(item => item.id == id)
+
+            setPerson(findedTeacher)
+            setName(findedTeacher?.name)
+            setSurname(findedTeacher?.surname)
+            setEmail(findedTeacher?.email)
+            setActivity(findedTeacher?.study ? findedTeacher?.study : findedTeacher?.job)
+            setBio(findedTeacher?.bio)
+        }
+    }
 
     function handleSubmit(e) {
         e.preventDefault()
-
         const data = {
             name: e.target.name.value,
             surname: e.target.surname.value,
             email: e.target.email.value,
             bio: e.target.bio.value,
         }
+        setIsLoading(true)
 
-        if (personSelected === '1') {
-            data.study = e.target.activity.value
-            toast.success('You added student')
-            setIsLoading(true)
-            setTimeout(() => {
-                addStudent(data).then(res => {
-                    setShowData('1')
-                    setOpenModal(false)
-                    setIsLoading(false)
-                })
-            }, 1000)
+        if (person) {
+            if (showData == '1') {
+                data.study = e.target.activity.value
+                setTimeout(() => {
+                    EditStudent(person.id, data).then(() => {
+                        setShowData('1')
+                        setEditModal(false)
+                        toast.success('You edited student')
+                        setIsLoading(false)
+                        setPerson(null)
+                    })
+                }, 1000)
+            }
+            else {
+                data.job = e.target.activity.value
+                setTimeout(() => {
+                    EditTeacher(person.id, data).then(() => {
+                        setShowData('2')
+                        setEditModal(false)
+                        toast.success('You edited teacher')
+                        setIsLoading(false)
+                        setPerson(null)
+                    })
+                }, 1000)
 
-        } else {
-            data.job = e.target.activity.value
-            toast.success('You added teacher')
-            setIsLoading(true)
-            setTimeout(() => {
-                addTeacher(data).then(res => {
-                    setShowData('2')
-                    setOpenModal(false)
-                    setIsLoading(false)
-                })
-            }, 1000)
+            }
         }
+        else {
+            if (personSelected === '1') {
+                data.study = e.target.activity.value
+                toast.success('You added student')
+                
+                setTimeout(() => {
+                    addStudent(data).then(res => {
+                        setShowData('1')
+                        setOpenModal(false)
+                        setIsLoading(false)
+                    })
+                }, 1000)
+
+            } else {
+                data.job = e.target.activity.value
+                toast.success('You added teacher')
+                
+                setTimeout(() => {
+                    addTeacher(data).then(res => {
+                        setShowData('2')
+                        setOpenModal(false)
+                        setIsLoading(false)
+                    })
+                }, 1000)
+            }
+        }
+
         setName(null)
         setSurname(null)
         setEmail(null)
         setActivity(null)
         setBio(null)
     }
+
+
+
+
 
     function handleDelete(id) {
         setDeleteModal(true)
@@ -137,8 +196,8 @@ function School() {
                         <span className='text-lg dark:text-white'>No data available</span>
                     </li>}
 
-                    {showData == '1' ? students.map(item => <InformationCard onClick={handleDelete} key={item.id} item={item} />)
-                        : teachers.map(item => <InformationCard onClick={handleDelete} key={item.id} item={item} />)}
+                    {showData == '1' ? students.map(item => <InformationCard editClick={hadnleEdit} onClick={handleDelete} key={item.id} item={item} />)
+                        : teachers.map(item => <InformationCard editClick={hadnleEdit} onClick={handleDelete} key={item.id} item={item} />)}
 
                 </ul>
             </div>
@@ -169,6 +228,24 @@ function School() {
                             <Button onClick={handleDeletePerson} type='primary' size='large' className='bg-red-500 w-[48%] text-white hover:!bg-red-400'>Delete</Button>
                         </div>
                     </div>}
+            </Modal>
+            <Modal openModal={editModal} setOpenModal={setEditModal}>
+                {isLoading ? <img className='absolute inset-0 m-auto' src={LoadingImg} alt='loading img' width={100} height={100} /> :
+                    <form onSubmit={handleSubmit} autoComplete='off' className='space-y-4 dark:bg-[#17153B] dark:text-white flex bg-white p-4 shadow-lg rounded-lg flex-col w-full'>
+                        <h2 className='text-xl'>{showData == '1' ? 'Edit student' : 'Edit teacher'}</h2>
+                        <Input onChange={(e) => setName(e.target.value)} value={name} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white' type='text' size='large' name='name' placeholder='Enter a name' required />
+                        <Input onChange={(e) => setSurname(e.target.value)} value={surname} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white' type='text' size='large' name='surname' placeholder='Enter a surname' required />
+                        <Input onChange={(e) => setEmail(e.target.value)} value={email} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white' type='email' size='large' name='email' placeholder='Enter a email' required />
+                        <TextArea onChange={(e) => setBio(e.target.value)} value={bio} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white'
+                            name='bio'
+                            placeholder="Enter a bio"
+                            autoSize={{ minRows: 3, maxRows: 5 }}
+                        />
+                        <Input onChange={(e) => setActivity(e.target.value)} value={activity} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white' type='text' size='large' name='activity' placeholder={showData == '1' ? 'Enter hobby or study' : 'Enter a job'} required />
+                        <div className='flex items-center justify-end'>
+                            <Button type='default' htmlType='submit' size='large' className='px-5 py-2 text-lg rounded-lg text-white bg-blue-500 hover:bg-blue-400 duration-500'>Edit</Button>
+                        </div>
+                    </form>}
             </Modal>
 
         </>

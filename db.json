@@ -1,11 +1,12 @@
 {
   "students": [
     {
-      "id": "8634",
       "name": "hellodv sd",
-      "surname": "d zd ",
+      "surname": "b",
       "email": "nkvds@mman.com",
-      "study": "scsc"
+      "bio": "",
+      "study": "hello",
+      "id": "8634"
     },
     {
       "id": "68eb",
@@ -21,15 +22,32 @@
       "email": "asadullo@gmail.com",
       "bio": "I'm 10 . I study at 184-maktab, in my future I would be a businessman and help people in need",
       "study": "184-maktab"
+    },
+    {
+      "name": "asda",
+      "surname": "how are oyu ",
+      "email": "sjbcbj@gmail.com",
+      "bio": "",
+      "study": "hello",
+      "id": "3c8e"
     }
   ],
   "teachers": [
     {
-      "id": "86f3",
       "name": "jahongir",
       "surname": "faziljanov",
       "email": "jahongir@gmail.com",
-      "job": "ADVOKAT"
+      "bio": "not",
+      "job": "timur",
+      "id": "86f3"
+    },
+    {
+      "id": "80dc",
+      "name": "what are you di",
+      "surname": "en vjd",
+      "email": "sasc@gmail.com",
+      "bio": "ddscs",
+      "job": "scsaca"
     }
   ]
 }
