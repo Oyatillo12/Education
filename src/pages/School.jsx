@@ -1,4 +1,4 @@
-import { MoonFilled } from '@ant-design/icons'
+import { MoonFilled, SunOutlined } from '@ant-design/icons'
 import { Button, Input, } from 'antd'
 import React, { useState } from 'react'
 import Modal from '../components/Modal'
@@ -6,6 +6,7 @@ import useAxios from '../hook/useAxios'
 import InformationCard from '../components/InformationCard'
 import TextArea from 'antd/es/input/TextArea'
 import LoadingImg from '../assets/images/loading.png'
+import toast, { Toaster } from 'react-hot-toast'
 
 function School() {
     const [isLoading, setIsLoading] = useState(false)
@@ -24,6 +25,7 @@ function School() {
     const [activity, setActivity] = useState(null)
     const [bio, setBio] = useState(null)
 
+    const [mode, setMode] = useState(true)
     function handleStudentAdd() {
         setOpenModal(true)
         setPersonSelected('1')
@@ -41,11 +43,13 @@ function School() {
         const data = {
             name: e.target.name.value,
             surname: e.target.surname.value,
-            email: e.target.email.value
+            email: e.target.email.value,
+            bio: e.target.bio.value,
         }
 
         if (personSelected === '1') {
             data.study = e.target.activity.value
+            toast.success('You added student')
             setIsLoading(true)
             setTimeout(() => {
                 addStudent(data).then(res => {
@@ -57,6 +61,7 @@ function School() {
 
         } else {
             data.job = e.target.activity.value
+            toast.success('You added teacher')
             setIsLoading(true)
             setTimeout(() => {
                 addTeacher(data).then(res => {
@@ -91,16 +96,25 @@ function School() {
 
     }
 
+    function handleMode() {
+        document.documentElement.classList.toggle('dark')
+        setMode(!mode)
+    }
+
     return (
         <>
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
             <div className='mx-auto px-5 max-w-[1100px]'>
-                <div className='py-5 mb-[60px] px-10 flex items-center justify-between rounded-b-[30px] shadow-lg'>
-                    <h1 className='text-[30px] leading-[35px] font-bold'>Our Education</h1>
+                <div className='py-5 mb-[60px] px-10 flex items-center dark:bg-[#180161] justify-between rounded-b-[30px] shadow-lg'>
+                    <h1 className='text-[30px] leading-[35px] font-bold dark:text-white'>Our Education</h1>
                     <div className='flex items-center space-x-10 relative'>
-                        <Button onClick={() => setShowAddPerson(!showAddPerson)} size='large' htmlType='button' type='default'>Add now</Button>
-                        <MoonFilled className='scale-[2]' />
+                        <Button className='dark:bg-[#211951] dark:text-white dark:hover:!bg-transparent' onClick={() => setShowAddPerson(!showAddPerson)} size='large' htmlType='button' type='default'>Add now</Button>
+                        {mode ? <MoonFilled onClick={handleMode} className='scale-[2] hover:opacity-60 duration-300' /> : <SunOutlined onClick={handleMode} className='scale-[2] text-white hover:opacity-60 duration-300  ' />}
                         {showAddPerson && <div onClick={(e) => e.target.id == 'wrapper' ? setShowAddPerson(false) : ""} id='wrapper' className={`fixed inset-0 backdrop-blur-sm flex justify-center items-center z-10`}>
-                            <div className=' w-[250px]  bg-white p-4 rounded-lg shadow-2xl'>
+                            <div className=' w-[250px]  bg-white dark:bg-[#17153B] dark:text-white p-4 rounded-lg shadow-2xl'>
                                 <p className='text-center text-lg mb-2'>Choose a category</p>
                                 <div className='flex items-center justify-between'>
                                     <button onClick={handleStudentAdd} className='w-[48%] py-1 text-[16px] border rounded-lg border-gray-400 hover:bg-[#00000022] duration-300'>Student</button>
@@ -117,10 +131,10 @@ function School() {
                 </div>
                 <ul className='flex items-center justify-center flex-col space-y-6'>
                     {showData == '2' && teachers.length === 0 && <li className='flex items-center justify-between px-5 py-4 border-b-[1px] border-gray-200'>
-                        <span className='text-lg'>No data available</span>
+                        <span className='text-lg dark:text-white'>No data available</span>
                     </li>}
                     {showData == '1' && students.length === 0 && <li className='flex items-center justify-between px-5 py-4 border-b-[1px] border-gray-200'>
-                        <span className='text-lg'>No data available</span>
+                        <span className='text-lg dark:text-white'>No data available</span>
                     </li>}
 
                     {showData == '1' ? students.map(item => <InformationCard onClick={handleDelete} key={item.id} item={item} />)
@@ -130,17 +144,17 @@ function School() {
             </div>
             <Modal openModal={openModal} setOpenModal={setOpenModal}>
                 {isLoading ? <img className='absolute inset-0 m-auto' src={LoadingImg} alt='loading img' width={100} height={100} /> :
-                    <form onSubmit={handleSubmit} autoComplete='off' className='space-y-4 flex bg-white p-4 shadow-lg rounded-lg flex-col w-full'>
+                    <form onSubmit={handleSubmit} autoComplete='off' className='space-y-4 dark:bg-[#17153B] dark:text-white flex bg-white p-4 shadow-lg rounded-lg flex-col w-full'>
                         <h2 className='text-xl'>{personSelected == '1' ? 'Adding student' : 'Adding teacher'}</h2>
-                        <Input onChange={(e) => setName(e.target.value)} value={name} className='text-lg' type='text' size='large' name='name' placeholder='Enter a name' required />
-                        <Input onChange={(e) => setSurname(e.target.value)} value={surname} className='text-lg' type='text' size='large' name='surname' placeholder='Enter a surname' required />
-                        <Input onChange={(e) => setEmail(e.target.value)} value={email} className='text-lg' type='email' size='large' name='email' placeholder='Enter a email' required />
-                        <TextArea onChange={(e) => setBio(e.target.value)} value={bio} className='text-lg'
+                        <Input onChange={(e) => setName(e.target.value)} value={name} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white' type='text' size='large' name='name' placeholder='Enter a name' required />
+                        <Input onChange={(e) => setSurname(e.target.value)} value={surname} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white' type='text' size='large' name='surname' placeholder='Enter a surname' required />
+                        <Input onChange={(e) => setEmail(e.target.value)} value={email} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white' type='email' size='large' name='email' placeholder='Enter a email' required />
+                        <TextArea onChange={(e) => setBio(e.target.value)} value={bio} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white'
                             name='bio'
                             placeholder="Enter a bio"
                             autoSize={{ minRows: 3, maxRows: 5 }}
                         />
-                        <Input onChange={(e) => setActivity(e.target.value)} value={activity} className='text-lg' type='text' size='large' name='activity' placeholder={personSelected == '1' ? 'Enter hobby or title' : 'Enter a job'} required />
+                        <Input onChange={(e) => setActivity(e.target.value)} value={activity} className='text-lg dark:bg-[#17153B] dark:text-white dark:placeholder:text-white' type='text' size='large' name='activity' placeholder={personSelected == '1' ? 'Enter hobby or study' : 'Enter a job'} required />
                         <div className='flex items-center justify-end'>
                             <Button type='default' htmlType='submit' size='large' className='px-5 py-2 text-lg rounded-lg text-white bg-blue-500 hover:bg-blue-400 duration-500'>Add</Button>
                         </div>
@@ -148,7 +162,7 @@ function School() {
             </Modal>
             <Modal openModal={deleteModal} setOpenModal={setDeleteModal}>
                 {isLoading ? <img className='absolute inset-0 m-auto' src={LoadingImg} alt='loading img' width={100} height={100} /> :
-                    <div className='flex flex-col items-center justify-center bg-white shadow-lg rounded-lg p-4'>
+                    <div className='flex flex-col items-center justify-center bg-white shadow-lg rounded-lg p-4 dark:bg-[#17153B] dark:text-white'>
                         <h2 className='text-xl mb-3'>Are you sure you want to delete this record?</h2>
                         <div className='flex items-center justify-between w-full'>
                             <Button onClick={() => setDeleteModal(false)} type='default' size='large' className='w-[48%]'>Cancel</Button>

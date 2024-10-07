@@ -3,7 +3,7 @@ import React from 'react'
 
 function InformationCard({ item, onClick }) {
     return (
-        <li className='p-4 w-[700px] bg-slate-200 rounded-lg'  >
+        <li className='p-4 w-[700px] bg-slate-200 dark:bg-[#180161] dark:text-white rounded-lg'  >
             <div className='flex items-center py-4 border-b-[1px] border-b-gray-400 justify-between'>
                 <span className='text-lg font-bold'>Fullname:</span>
                 <strong className='text-lg italic font-normal'>{item.name + "_" + item.surname}</strong>

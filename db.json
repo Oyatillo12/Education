@@ -1,12 +1,35 @@
 {
-  "students": [],
+  "students": [
+    {
+      "id": "8634",
+      "name": "hellodv sd",
+      "surname": "d zd ",
+      "email": "nkvds@mman.com",
+      "study": "scsc"
+    },
+    {
+      "id": "68eb",
+      "name": "bobur",
+      "surname": "mahkamov",
+      "email": "bobur@gmail.com",
+      "study": "teacher"
+    },
+    {
+      "id": "9140",
+      "name": "Asadullo",
+      "surname": "Vasiev",
+      "email": "asadullo@gmail.com",
+      "bio": "I'm 10 . I study at 184-maktab, in my future I would be a businessman and help people in need",
+      "study": "184-maktab"
+    }
+  ],
   "teachers": [
     {
-      "id": "de2a",
-      "name": "Oyatillo",
-      "surname": "Abdishukurov",
-      "email": "oyatillo@gmail.com",
-      "job": "frontend mentor"
+      "id": "86f3",
+      "name": "jahongir",
+      "surname": "faziljanov",
+      "email": "jahongir@gmail.com",
+      "job": "ADVOKAT"
     }
   ]
 }
